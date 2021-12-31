@@ -1,18 +1,18 @@
 import ical, { ICalCalendar } from "ical-generator";
-import { BirthDay } from "./birthday";
-import { Event } from "./event";
+import { IBirthDay } from "./birthday";
+import { IEvent } from "./event";
 import moment from "moment";
 
 export class Schedule {
-  private birthday: BirthDay;
+  private birthday: IBirthDay;
   private calendar: ICalCalendar;
 
-  constructor(birthday: BirthDay) {
+  constructor(birthday: IBirthDay) {
     this.birthday = birthday;
     this.calendar = ical({ name: "schedule for " + birthday.name });
   }
 
-  add(event: Event) {
+  add(event: IEvent) {
     let m = moment(this.birthday.day)
       .clone()
       .add(event.days, "days")

@@ -1,4 +1,4 @@
-export type BirthDay = {
-  day: string;
-  name: string;
-};
+export interface IBirthDay {
+  get day(): string;
+  get name(): string;
+}

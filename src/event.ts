@@ -53,3 +53,13 @@ export class Event {
     return this._full;
   }
 }
+
+export interface IEvent {
+  summary(name: string): string;
+  get years(): number;
+  get months(): number;
+  get days(): number;
+  get month(): number | null;
+  get day(): number | null;
+  get full(): boolean;
+}
