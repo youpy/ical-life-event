@@ -35,7 +35,10 @@ describe("schedule", () => {
     const icalEvents = extractEvents(schedule.toString());
 
     expect(icalEvents.length).toBe(2);
+
+    // https://github.com/peterbraden/ical.js/issues/103
     expect(icalEvents[0].start?.hasOwnProperty("dateOnly")).toBe(true);
+
     expect(icalEvents[0].start?.getDate()).toBe(12);
     expect(icalEvents[0].start?.getFullYear()).toBe(2016);
     expect(icalEvents[0].start?.getMonth()).toBe(2);
