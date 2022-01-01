@@ -1,3 +1,3 @@
 export { Event, IEvent } from "./event";
-export { IBirthDay } from "./birthday";
+export { IBirthDay, Gender } from "./birthday";
 export { Schedule } from "./schedule";
