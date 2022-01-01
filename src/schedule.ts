@@ -17,13 +17,14 @@ export class Schedule {
       return;
     }
 
-    let m = moment(this.birthday.day)
+    const mBirthday = moment(this.birthday.day);
+    const m = mBirthday
       .clone()
       .add(event.days, "days")
       .add(event.months, "months")
       .add(event.years, "years");
 
-    if (event.full && m.month() >= 3) {
+    if (event.full && mBirthday.month() >= 3) {
       m.add(1, "years");
     }
 
