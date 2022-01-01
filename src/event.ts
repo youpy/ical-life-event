@@ -1,13 +1,21 @@
-import { Gender } from "./birthday";
+import moment from "moment";
+import { Gender, IBirthDay } from "./birthday";
+
+export interface IEventApplication {
+  tz: string;
+  date: string;
+  summary: string;
+}
+
 export class Event {
-  private _years: number;
-  private _months: number;
-  private _days: number;
-  private _month: number | null;
-  private _day: number | null;
-  private _full: boolean;
-  private _title: string;
-  private _gender: Gender | undefined;
+  readonly years: number;
+  readonly months: number;
+  readonly days: number;
+  readonly month: number | null;
+  readonly day: number | null;
+  readonly full: boolean;
+  readonly title: string;
+  readonly gender: Gender | undefined;
 
   constructor(
     years: number,
@@ -19,51 +27,54 @@ export class Event {
     title: string,
     gender?: Gender
   ) {
-    this._years = years;
-    this._months = months;
-    this._days = days;
-    this._month = month;
-    this._day = day;
-    this._full = full;
-    this._title = title;
-    this._gender = gender;
+    this.years = years;
+    this.months = months;
+    this.days = days;
+    this.month = month;
+    this.day = day;
+    this.full = full;
+    this.title = title;
+    this.gender = gender;
   }
 
-  summary(name: string): string {
-    return [name, this._title].join(" ");
+  apply(birthday: IBirthDay): IEventApplication | null {
+    if (this.gender && this.gender !== birthday.gender) {
+      return null;
+    }
+
+    const mBirthday = moment(birthday.day);
+    const m = mBirthday
+      .clone()
+      .add(this.days, "days")
+      .add(this.months, "months")
+      .add(this.years, "years");
+
+    if (this.full && mBirthday.month() >= 3) {
+      m.add(1, "years");
+    }
+
+    if (this.month !== null) {
+      m.month(this.month);
+    }
+
+    if (this.day !== null) {
+      m.date(this.day + 1);
+    }
+
+    return {
+      date: m.calendar(),
+      tz: m.format("Z"),
+      summary: this.summary(birthday.name),
+    };
   }
 
-  get years(): number {
-    return this._years;
-  }
-
-  get months(): number {
-    return this._months;
-  }
-
-  get days(): number {
-    return this._days;
-  }
-
-  get month(): number | null {
-    return this._month;
-  }
-
-  get day(): number | null {
-    return this._day;
-  }
-
-  get full(): boolean {
-    return this._full;
-  }
-
-  get gender(): Gender | undefined {
-    return this._gender;
+  private summary(name: string): string {
+    return [name, this.title].join(" ");
   }
 }
 
 export interface IEvent {
-  summary(name: string): string;
+  apply(birthday: IBirthDay): IEventApplication | null;
   get years(): number;
   get months(): number;
   get days(): number;
