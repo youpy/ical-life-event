@@ -35,10 +35,12 @@ describe("schedule", () => {
     const icalEvents = extractEvents(schedule.toString());
 
     expect(icalEvents.length).toBe(2);
+    expect(icalEvents[0].start?.hasOwnProperty("dateOnly")).toBe(true);
     expect(icalEvents[0].start?.getDate()).toBe(12);
     expect(icalEvents[0].start?.getFullYear()).toBe(2016);
     expect(icalEvents[0].start?.getMonth()).toBe(2);
     expect(icalEvents[0].summary).toBe("foo bar お宮参り・初宮参り");
+    expect(icalEvents[0].start?.hasOwnProperty("dateOnly")).toBe(true);
     expect(icalEvents[1].start?.getDate()).toBe(1);
     expect(icalEvents[1].start?.getFullYear()).toBe(2022);
     expect(icalEvents[1].start?.getMonth()).toBe(3);
@@ -57,6 +59,7 @@ describe("schedule", () => {
     const icalEvents = extractEvents(schedule.toString());
 
     expect(icalEvents.length).toBe(1);
+    expect(icalEvents[0].start?.hasOwnProperty("dateOnly")).toBe(true);
     expect(icalEvents[0].start?.getDate()).toBe(1);
     expect(icalEvents[0].start?.getFullYear()).toBe(2023);
     expect(icalEvents[0].start?.getMonth()).toBe(3);

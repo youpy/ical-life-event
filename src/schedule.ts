@@ -33,6 +33,7 @@ export class Schedule {
 
     this.calendar.timezone(m.format("Z"));
     this.calendar.createEvent({
+      allDay: true,
       start: m.calendar(),
       summary: event.summary(this.birthday.name),
     });
