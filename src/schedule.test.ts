@@ -70,7 +70,7 @@ describe("schedule", () => {
     expect(icalEvents[0].summary).toBe("foo bar 小学校入学");
   });
 
-  test("creates a schedule for girls", () => {
+  test("creates a schedule with a event for a specific gender", () => {
     const bd = { name: "foo bar", day: "2016-04-30", gender: "f" as Gender };
     const events: Event[] = [
       new Event(3, 0, 0, 10, 14, true, "七五三 3歳", "f"),
