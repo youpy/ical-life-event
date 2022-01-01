@@ -73,11 +73,4 @@ export class Event {
 
 export interface IEvent {
   apply(birthday: IBirthDay): IEventApplication | null;
-  get years(): number;
-  get months(): number;
-  get days(): number;
-  get month(): number | null;
-  get day(): number | null;
-  get full(): boolean;
-  get gender(): Gender | undefined;
 }
