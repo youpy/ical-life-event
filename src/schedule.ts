@@ -13,6 +13,10 @@ export class Schedule {
   }
 
   add(event: IEvent) {
+    if (event.gender && event.gender !== this.birthday.gender) {
+      return;
+    }
+
     let m = moment(this.birthday.day)
       .clone()
       .add(event.days, "days")

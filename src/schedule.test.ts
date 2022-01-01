@@ -1,6 +1,7 @@
 import { Event } from "./event";
 import { Schedule } from "./schedule";
 import ical from "ical";
+import { Gender } from "./birthday";
 
 const extractEvents = (icalData: string): ical.CalendarComponent[] => {
   const icalEvents: ical.CalendarComponent[] = [];
@@ -21,7 +22,7 @@ const extractEvents = (icalData: string): ical.CalendarComponent[] => {
 
 describe("schedule", () => {
   test("creates a schedule", () => {
-    const bd = { name: "foo bar", day: "2016-02-10" };
+    const bd = { name: "foo bar", day: "2016-02-10", gender: "m" as Gender };
     const events: Event[] = [
       new Event(0, 0, 31, null, null, false, "お宮参り・初宮参り"),
       new Event(6, 0, 0, 3, 0, true, "小学校入学"),
@@ -51,7 +52,7 @@ describe("schedule", () => {
   });
 
   test("creates a schedule with early birthday", () => {
-    const bd = { name: "foo bar", day: "2016-04-30" };
+    const bd = { name: "foo bar", day: "2016-04-30", gender: "m" as Gender };
     const events: Event[] = [new Event(6, 0, 0, 3, 0, true, "小学校入学")];
     const schedule = new Schedule(bd);
 
@@ -67,5 +68,27 @@ describe("schedule", () => {
     expect(icalEvents[0].start?.getFullYear()).toBe(2023);
     expect(icalEvents[0].start?.getMonth()).toBe(3);
     expect(icalEvents[0].summary).toBe("foo bar 小学校入学");
+  });
+
+  test("creates a schedule for girls", () => {
+    const bd = { name: "foo bar", day: "2016-04-30", gender: "f" as Gender };
+    const events: Event[] = [
+      new Event(3, 0, 0, 10, 14, true, "七五三 3歳", "f"),
+    ];
+    let schedule = new Schedule(bd);
+
+    events.forEach((ev) => {
+      schedule.add(ev);
+    });
+
+    expect(extractEvents(schedule.toString()).length).toBe(1);
+
+    bd.gender = "m";
+    schedule = new Schedule(bd);
+    events.forEach((ev) => {
+      schedule.add(ev);
+    });
+
+    expect(extractEvents(schedule.toString()).length).toBe(0);
   });
 });

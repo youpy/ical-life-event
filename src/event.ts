@@ -1,3 +1,4 @@
+import { Gender } from "./birthday";
 export class Event {
   private _years: number;
   private _months: number;
@@ -6,6 +7,7 @@ export class Event {
   private _day: number | null;
   private _full: boolean;
   private _title: string;
+  private _gender: Gender | undefined;
 
   constructor(
     years: number,
@@ -14,7 +16,8 @@ export class Event {
     month: number | null,
     day: number | null,
     full: boolean,
-    title: string
+    title: string,
+    gender?: Gender
   ) {
     this._years = years;
     this._months = months;
@@ -23,6 +26,7 @@ export class Event {
     this._day = day;
     this._full = full;
     this._title = title;
+    this._gender = gender;
   }
 
   summary(name: string): string {
@@ -52,6 +56,10 @@ export class Event {
   get full(): boolean {
     return this._full;
   }
+
+  get gender(): Gender | undefined {
+    return this._gender;
+  }
 }
 
 export interface IEvent {
@@ -62,4 +70,5 @@ export interface IEvent {
   get month(): number | null;
   get day(): number | null;
   get full(): boolean;
+  get gender(): Gender | undefined;
 }
