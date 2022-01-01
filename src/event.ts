@@ -2,8 +2,7 @@ import moment from "moment";
 import { Gender, IBirthDay } from "./birthday";
 
 export interface IEventApplication {
-  tz: string;
-  date: string;
+  date: Date;
   summary: string;
 }
 
@@ -42,7 +41,7 @@ export class Event {
       return null;
     }
 
-    const mBirthday = moment(birthday.day);
+    const mBirthday = moment.utc(birthday.day);
     const m = mBirthday
       .clone()
       .add(this.days, "days")
@@ -62,8 +61,7 @@ export class Event {
     }
 
     return {
-      date: m.calendar(),
-      tz: m.format("Z"),
+      date: m.toDate(),
       summary: this.summary(birthday.name),
     };
   }

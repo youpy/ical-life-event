@@ -17,7 +17,6 @@ export class Schedule {
       return;
     }
 
-    this.calendar.timezone(res.tz);
     this.calendar.createEvent({
       allDay: true,
       start: res.date,

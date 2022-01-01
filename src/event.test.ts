@@ -12,8 +12,7 @@ describe("event", () => {
     const res = event.apply(birthday);
 
     expect(res).not.toBeNull();
-    expect(res?.date).toBe("03/12/2016");
-    expect(res?.tz).toBe("+09:00");
+    expect(res?.date.toISOString()).toBe("2016-03-12T00:00:00.000Z");
     expect(res?.summary).toBe("foo お宮参り・初宮参り");
   });
 });
