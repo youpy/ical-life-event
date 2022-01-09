@@ -1,12 +1,6 @@
 import moment from "moment";
 import { Gender, IBirthDay } from "./birthday";
-import {
-  IEventPolicy,
-  RelativeEventPolicy,
-  AbsoluteEventPolicy,
-  CountingEventPolicy,
-  CompositeEventPolicy,
-} from "./event_policy";
+import { IEventPolicy } from "./event_policy";
 
 export interface IEventApplication {
   date: Date;
