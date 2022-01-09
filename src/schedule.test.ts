@@ -1,8 +1,8 @@
 import {
   RelativeEventPolicy,
   CompositeEventPolicy,
-  CountingEventPolicy,
   AbsoluteEventPolicy,
+  JapaneseSchoolEventPolicy,
 } from "./event_policy";
 import { Event } from "./event";
 import { Schedule } from "./schedule";
@@ -31,13 +31,7 @@ describe("schedule", () => {
     const bd = { name: "foo bar", day: "2016-02-10", gender: "m" as Gender };
     const events: Event[] = [
       new Event("お宮参り・初宮参り", new RelativeEventPolicy(0, 0, 31)),
-      new Event(
-        "小学校入学",
-        new CompositeEventPolicy(
-          new CountingEventPolicy(6, 3, 0),
-          new AbsoluteEventPolicy(3, 0)
-        )
-      ),
+      new Event("小学校入学", JapaneseSchoolEventPolicy(6, 3, 0)),
     ];
     const schedule = new Schedule(bd);
 

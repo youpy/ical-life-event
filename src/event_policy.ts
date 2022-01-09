@@ -51,32 +51,23 @@ export class AbsoluteEventPolicy implements IEventPolicy {
 }
 
 export class CountingEventPolicy implements IEventPolicy {
-  readonly years: number;
   readonly month: number;
   readonly day: number;
 
-  constructor(years: number, month: number, day: number) {
-    this.years = years;
+  constructor(month: number, day: number) {
     this.month = month;
     this.day = day;
   }
 
   apply(date: Date): Date {
     const m = moment.utc(date);
-    const delemiterDate = m.clone();
+    const delemiterDate = m
+      .clone()
+      .month(this.month)
+      .date(this.day + 1);
 
-    if (this.month !== null) {
-      delemiterDate.month(this.month);
-    }
-
-    if (this.day !== null) {
-      delemiterDate.date(this.day + 1);
-    }
-
-    if (m.isBefore(delemiterDate)) {
-      m.add(this.years, "years");
-    } else {
-      m.add(this.years + 1, "years");
+    if (m.isSameOrAfter(delemiterDate)) {
+      m.add(1, "years");
     }
 
     return m.toDate();
@@ -100,3 +91,20 @@ export class CompositeEventPolicy implements IEventPolicy {
     return result;
   }
 }
+
+export const JapaneseSchoolEventPolicy = (
+  years: number,
+  month: number,
+  day: number
+): IEventPolicy => {
+  return new CompositeEventPolicy(
+    // https://www.mext.go.jp/a_menu/shotou/shugaku/detail/1422233.htm
+    //
+    // > 4月1日生まれの児童生徒の学年は、翌日の4月2日以降生まれの児童生徒の学年より一つ上、ということになり、
+    // > 一学年は4月2日生まれから翌年の4月1日生まれの児童生徒までで構成されることになります。
+    new CountingEventPolicy(3, 1),
+
+    new RelativeEventPolicy(years, 0, 0),
+    new AbsoluteEventPolicy(month, day)
+  );
+};

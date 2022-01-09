@@ -45,7 +45,8 @@ describe("event", () => {
         new Event(
           "小学校入学",
           new CompositeEventPolicy(
-            new CountingEventPolicy(6, 3, 0),
+            new CountingEventPolicy(3, 1),
+            new RelativeEventPolicy(6, 0, 0),
             new AbsoluteEventPolicy(3, 0)
           )
         ),
@@ -59,7 +60,8 @@ describe("event", () => {
         new Event(
           "小学校入学",
           new CompositeEventPolicy(
-            new CountingEventPolicy(6, 3, 0),
+            new CountingEventPolicy(3, 1),
+            new RelativeEventPolicy(6, 0, 0),
             new AbsoluteEventPolicy(3, 0)
           )
         ),
@@ -73,7 +75,7 @@ describe("event", () => {
         new Event(
           "初節句",
           new CompositeEventPolicy(
-            new CountingEventPolicy(0, 2, 2),
+            new CountingEventPolicy(2, 2),
             new AbsoluteEventPolicy(2, 2)
           )
         ),
@@ -87,7 +89,7 @@ describe("event", () => {
         new Event(
           "初節句",
           new CompositeEventPolicy(
-            new CountingEventPolicy(0, 2, 2),
+            new CountingEventPolicy(2, 2),
             new AbsoluteEventPolicy(2, 2)
           )
         ),
