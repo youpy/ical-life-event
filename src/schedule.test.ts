@@ -1,3 +1,9 @@
+import {
+  RelativeEventPolicy,
+  CompositeEventPolicy,
+  CoutingEventPolicy,
+  AbsoluteEventPolicy,
+} from "./event_policy";
 import { Event } from "./event";
 import { Schedule } from "./schedule";
 import ical from "ical";
@@ -24,8 +30,14 @@ describe("schedule", () => {
   test("creates a schedule", () => {
     const bd = { name: "foo bar", day: "2016-02-10", gender: "m" as Gender };
     const events: Event[] = [
-      new Event(0, 0, 31, null, null, false, "お宮参り・初宮参り"),
-      new Event(6, 0, 0, 3, 0, true, "小学校入学"),
+      new Event("お宮参り・初宮参り", new RelativeEventPolicy(0, 0, 31)),
+      new Event(
+        "小学校入学",
+        new CompositeEventPolicy(
+          new CoutingEventPolicy(6, 3, 0),
+          new AbsoluteEventPolicy(3, 0)
+        )
+      ),
     ];
     const schedule = new Schedule(bd);
 
@@ -54,7 +66,14 @@ describe("schedule", () => {
   test("creates a schedule with a event for a specific gender", () => {
     const bd = { name: "foo bar", day: "2016-04-30", gender: "f" as Gender };
     const events: Event[] = [
-      new Event(3, 0, 0, 10, 14, true, "七五三 3歳", "f"),
+      new Event(
+        "七五三 3歳",
+        new CompositeEventPolicy(
+          new RelativeEventPolicy(3, 0, 0),
+          new AbsoluteEventPolicy(10, 14)
+        ),
+        "f"
+      ),
     ];
     let schedule = new Schedule(bd);
 

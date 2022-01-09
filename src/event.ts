@@ -1,5 +1,12 @@
 import moment from "moment";
 import { Gender, IBirthDay } from "./birthday";
+import {
+  IEventPolicy,
+  RelativeEventPolicy,
+  AbsoluteEventPolicy,
+  CoutingEventPolicy,
+  CompositeEventPolicy,
+} from "./event_policy";
 
 export interface IEventApplication {
   date: Date;
@@ -7,32 +14,13 @@ export interface IEventApplication {
 }
 
 export class Event {
-  readonly years: number;
-  readonly months: number;
-  readonly days: number;
-  readonly month: number | null;
-  readonly day: number | null;
-  readonly full: boolean;
   readonly title: string;
   readonly gender: Gender | undefined;
+  readonly policy: IEventPolicy;
 
-  constructor(
-    years: number,
-    months: number,
-    days: number,
-    month: number | null,
-    day: number | null,
-    full: boolean,
-    title: string,
-    gender?: Gender
-  ) {
-    this.years = years;
-    this.months = months;
-    this.days = days;
-    this.month = month;
-    this.day = day;
-    this.full = full;
+  constructor(title: string, policy: IEventPolicy, gender?: Gender) {
     this.title = title;
+    this.policy = policy;
     this.gender = gender;
   }
 
@@ -41,27 +29,11 @@ export class Event {
       return null;
     }
 
-    const mBirthday = moment.utc(birthday.day);
-    const m = mBirthday
-      .clone()
-      .add(this.days, "days")
-      .add(this.months, "months")
-      .add(this.years, "years");
-
-    if (this.full && mBirthday.month() >= 3) {
-      m.add(1, "years");
-    }
-
-    if (this.month !== null) {
-      m.month(this.month);
-    }
-
-    if (this.day !== null) {
-      m.date(this.day + 1);
-    }
+    const date = moment.utc(birthday.day).toDate();
+    const result = this.policy.apply(date);
 
     return {
-      date: m.toDate(),
+      date: result,
       summary: this.summary(birthday.name),
     };
   }
