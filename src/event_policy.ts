@@ -50,7 +50,7 @@ export class AbsoluteEventPolicy implements IEventPolicy {
   }
 }
 
-export class CoutingEventPolicy implements IEventPolicy {
+export class CountingEventPolicy implements IEventPolicy {
   readonly years: number;
   readonly month: number;
   readonly day: number;

@@ -4,7 +4,7 @@ import {
   IEventPolicy,
   RelativeEventPolicy,
   AbsoluteEventPolicy,
-  CoutingEventPolicy,
+  CountingEventPolicy,
   CompositeEventPolicy,
 } from "./event_policy";
 

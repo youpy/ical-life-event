@@ -2,7 +2,7 @@ import {
   CompositeEventPolicy,
   RelativeEventPolicy,
   AbsoluteEventPolicy,
-  CoutingEventPolicy,
+  CountingEventPolicy,
 } from "./event_policy";
 import { Gender, IBirthDay } from "./birthday";
 import { Event, IEvent, IEventApplication } from "./event";
@@ -45,7 +45,7 @@ describe("event", () => {
         new Event(
           "小学校入学",
           new CompositeEventPolicy(
-            new CoutingEventPolicy(6, 3, 0),
+            new CountingEventPolicy(6, 3, 0),
             new AbsoluteEventPolicy(3, 0)
           )
         ),
@@ -59,7 +59,7 @@ describe("event", () => {
         new Event(
           "小学校入学",
           new CompositeEventPolicy(
-            new CoutingEventPolicy(6, 3, 0),
+            new CountingEventPolicy(6, 3, 0),
             new AbsoluteEventPolicy(3, 0)
           )
         ),
@@ -73,7 +73,7 @@ describe("event", () => {
         new Event(
           "初節句",
           new CompositeEventPolicy(
-            new CoutingEventPolicy(0, 2, 2),
+            new CountingEventPolicy(0, 2, 2),
             new AbsoluteEventPolicy(2, 2)
           )
         ),
@@ -87,7 +87,7 @@ describe("event", () => {
         new Event(
           "初節句",
           new CompositeEventPolicy(
-            new CoutingEventPolicy(0, 2, 2),
+            new CountingEventPolicy(0, 2, 2),
             new AbsoluteEventPolicy(2, 2)
           )
         ),

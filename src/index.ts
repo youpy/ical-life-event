@@ -2,7 +2,7 @@ export {
   IEventPolicy,
   RelativeEventPolicy,
   AbsoluteEventPolicy,
-  CoutingEventPolicy,
+  CountingEventPolicy,
   CompositeEventPolicy,
 } from "./event_policy";
 export { Event, IEvent } from "./event";

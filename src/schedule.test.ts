@@ -1,7 +1,7 @@
 import {
   RelativeEventPolicy,
   CompositeEventPolicy,
-  CoutingEventPolicy,
+  CountingEventPolicy,
   AbsoluteEventPolicy,
 } from "./event_policy";
 import { Event } from "./event";
@@ -34,7 +34,7 @@ describe("schedule", () => {
       new Event(
         "小学校入学",
         new CompositeEventPolicy(
-          new CoutingEventPolicy(6, 3, 0),
+          new CountingEventPolicy(6, 3, 0),
           new AbsoluteEventPolicy(3, 0)
         )
       ),
