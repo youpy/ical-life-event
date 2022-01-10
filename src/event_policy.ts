@@ -1,7 +1,7 @@
-import moment from "moment";
+import { Temporal } from "@js-temporal/polyfill";
 
 export interface IEventPolicy {
-  apply(date: Date): Date;
+  apply(date: Temporal.PlainDate): Temporal.PlainDate;
 }
 
 export class RelativeEventPolicy implements IEventPolicy {
@@ -15,14 +15,11 @@ export class RelativeEventPolicy implements IEventPolicy {
     this.days = days;
   }
 
-  apply(date: Date): Date {
-    const m = moment
-      .utc(date)
-      .add(this.days, "days")
-      .add(this.months, "months")
-      .add(this.years, "years");
-
-    return m.toDate();
+  apply(date: Temporal.PlainDate): Temporal.PlainDate {
+    return date
+      .add({ days: this.days })
+      .add({ months: this.months })
+      .add({ years: this.years });
   }
 }
 
@@ -35,18 +32,16 @@ export class AbsoluteEventPolicy implements IEventPolicy {
     this.day = day;
   }
 
-  apply(date: Date): Date {
-    const m = moment.utc(date);
-
+  apply(date: Temporal.PlainDate): Temporal.PlainDate {
     if (this.month !== null) {
-      m.month(this.month);
+      date = date.with({ month: this.month + 1 });
     }
 
     if (this.day !== null) {
-      m.date(this.day + 1);
+      date = date.with({ day: this.day + 1 });
     }
 
-    return m.toDate();
+    return date;
   }
 }
 
@@ -59,18 +54,16 @@ export class CountingEventPolicy implements IEventPolicy {
     this.day = day;
   }
 
-  apply(date: Date): Date {
-    const m = moment.utc(date);
-    const delemiterDate = m
-      .clone()
-      .month(this.month)
-      .date(this.day + 1);
+  apply(date: Temporal.PlainDate): Temporal.PlainDate {
+    const delemiterDate = date
+      .with({ month: this.month + 1 })
+      .with({ day: this.day + 1 });
 
-    if (m.isSameOrAfter(delemiterDate)) {
-      m.add(1, "years");
+    if (Temporal.PlainDate.compare(date, delemiterDate) == 1) {
+      date.add({ years: 1 });
     }
 
-    return m.toDate();
+    return date;
   }
 }
 
@@ -81,7 +74,7 @@ export class CompositeEventPolicy implements IEventPolicy {
     this.policies = policies;
   }
 
-  apply(date: Date): Date {
+  apply(date: Temporal.PlainDate): Temporal.PlainDate {
     let result = date;
 
     for (const policy of this.policies) {

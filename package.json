@@ -11,8 +11,8 @@
   "author": "youpy",
   "license": "MIT",
   "dependencies": {
+    "@js-temporal/polyfill": "^0.3.0",
     "ical-generator": "^3.1.1",
-    "moment": "^2.29.1",
     "yargs": "^17.3.1"
   },
   "devDependencies": {

@@ -1,3 +1,4 @@
+import { Temporal } from "@js-temporal/polyfill";
 import {
   CompositeEventPolicy,
   RelativeEventPolicy,
@@ -24,7 +25,7 @@ describe("event", () => {
         earlyBirthday,
         new Event("お宮参り・初宮参り", new RelativeEventPolicy(0, 0, 31)),
         {
-          date: new Date(Date.parse("2016-03-12T00:00:00.000Z")),
+          date: Temporal.PlainDate.from("2016-03-12"),
           summary: "foo お宮参り・初宮参り",
         },
       ],
@@ -51,7 +52,7 @@ describe("event", () => {
           )
         ),
         {
-          date: new Date(Date.parse("2022-04-01T00:00:00.000Z")),
+          date: Temporal.PlainDate.from("2022-04-01"),
           summary: "foo 小学校入学",
         },
       ],
@@ -66,7 +67,7 @@ describe("event", () => {
           )
         ),
         {
-          date: new Date(Date.parse("2023-04-01T00:00:00.000Z")),
+          date: Temporal.PlainDate.from("2023-04-01"),
           summary: "bar 小学校入学",
         },
       ],
@@ -80,7 +81,7 @@ describe("event", () => {
           )
         ),
         {
-          date: new Date(Date.parse("2016-03-03T00:00:00.000Z")),
+          date: Temporal.PlainDate.from("2016-03-03"),
           summary: "foo 初節句",
         },
       ],
@@ -94,7 +95,7 @@ describe("event", () => {
           )
         ),
         {
-          date: new Date(Date.parse("2017-03-03T00:00:00.000Z")),
+          date: Temporal.PlainDate.from("2017-03-03"),
           summary: "bar 初節句",
         },
       ],

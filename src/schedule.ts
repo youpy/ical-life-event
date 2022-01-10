@@ -19,7 +19,7 @@ export class Schedule {
 
     this.calendar.createEvent({
       allDay: true,
-      start: res.date,
+      start: res.date.toString(),
       summary: res.summary,
     });
   }

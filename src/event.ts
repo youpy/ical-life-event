@@ -1,9 +1,9 @@
-import moment from "moment";
 import { Gender, IBirthDay } from "./birthday";
 import { IEventPolicy } from "./event_policy";
+import { Temporal } from "@js-temporal/polyfill";
 
 export interface IEventApplication {
-  date: Date;
+  date: Temporal.PlainDate;
   summary: string;
 }
 
@@ -23,7 +23,7 @@ export class Event {
       return null;
     }
 
-    const date = moment.utc(birthday.day).toDate();
+    const date = Temporal.PlainDate.from(birthday.day);
     const result = this.policy.apply(date);
 
     return {

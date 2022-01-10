@@ -1,4 +1,4 @@
-import moment from "moment";
+import { Temporal } from "@js-temporal/polyfill";
 import {
   RelativeEventPolicy,
   AbsoluteEventPolicy,
@@ -7,7 +7,7 @@ import {
   JapaneseSchoolEventPolicy,
 } from "./event_policy";
 
-const sd = (dateString: string) => moment.utc(dateString).toDate();
+const sd = (dateString: string) => Temporal.PlainDate.from(dateString);
 
 describe("RelativeEventPolicy", () => {
   it("apples", () => {
